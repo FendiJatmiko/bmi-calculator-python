@@ -1,1 +1,1 @@
-web: gunicorn app:cicd-sekolahmu
+web: gunicorn wsgi:cicd-sekolahmu
