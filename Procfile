@@ -1,1 +1,1 @@
-web: gunicorn wsgi:cicd-sekolahmu
+web: gunicorn cicd-sekolahmu.wsgi --log-file -
