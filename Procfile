@@ -1,1 +1,1 @@
-web: gunicorn run:cicd-sekolahmu
+web: gunicorn app:cicd-sekolahmu
