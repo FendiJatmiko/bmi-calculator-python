@@ -1,1 +1,1 @@
-web: gunicorn app:cicd-sekolahmu --log-file -
+web: gunicorn app:app --log-file -
