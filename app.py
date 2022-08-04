@@ -5,6 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def bmi():
+    print('This is staging testing for auto deploy')
     # get query args
     h = request.args['height']
     w = request.args['weight']
