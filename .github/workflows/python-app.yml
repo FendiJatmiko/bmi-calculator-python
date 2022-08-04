@@ -35,7 +35,9 @@ jobs:
     - name: Test with pytest #finally we will want to run our tests
       run: |
         pip install pytest
+        pip install pytest-cov
         #export PYTHONPATH=app
+       # pytest tests.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=htmlpip install pytest-cov
         pytest
     - name: Add remote origin
       if: github.ref == 'refs/heads/main' && job.status == 'success' #we specify that this action will ONLY run if everything up to now is successful- so if theres a fail in the tests, then this will not be deployed.
