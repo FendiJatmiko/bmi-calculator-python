@@ -28,7 +28,8 @@ def bmi():
     # data as dict
     data = {
         "bmi": bmi,
-        "label": label
+        "label": label,
+        "version": "version"
     }
     
     # return data
