@@ -1,8 +1,8 @@
 # app test
 def test_bmi():
     data = {
-        "bmi": bmi,
-        "label": label
+        "bmi": "testing",
+        "label": "testing 2"
     }
     
     # return data
