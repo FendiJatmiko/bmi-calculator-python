@@ -70,10 +70,10 @@ jobs:
     steps:
       - name: Deploy to Staging 
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-          with:
-            heroku_api_key: ${{secrets.HEROKU_API}}
-            heroku_app_name: $APP_NAME
-            heroku_email: "jatmikofendi@hotmail.com"
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API}}
+          heroku_app_name: $APP_NAME
+          heroku_email: "jatmikofendi@hotmail.com"
         if: github.event.ref == 'refs/heads/main'
         needs: [Build]
         runs-on: ubuntu-latest
