@@ -29,7 +29,7 @@ def bmi():
     data = {
         "bmi": bmi,
         "label": label,
-        "version": "version"
+        "version": "#2.0"
     }
     
     # return data
