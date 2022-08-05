@@ -56,7 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: 
       name: Staging
-      url: 'http://test.myapp.com'
+      url: 'http://staging-cicd-sekolahmu.herokuapp.com'
     steps:
       - name: checkout git
         uses: actions/checkout@v2
