@@ -68,19 +68,20 @@ jobs:
       - name: Docker build
         run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
 
-      - name: Deploy to Heroku
+      - name: login to heroku
         run: |
-          heroku apps
-          heroku container:push web -a $APP_NAME
-          heroku container:release web -a $APP_NAME
+          heroku container:login
+          #heroku apps
+          #heroku container:push web -a $APP_NAME
+          #heroku container:release web -a $APP_NAME
 
-  DeployProd:
-    name: Deploy to Production 
-    needs: [DeployStaging]
-    runs-on: ubuntu-latest
-    environment: 
-      name: Production
-      url: 'https://cicd-sekolahmu.herokuapp.com/'
-    steps:
-      - name: Deploy
-        run: echo I am deploying to prod! 
+  #DeployProd:
+    #name: Deploy to Production 
+    #needs: [DeployStaging]
+    #runs-on: ubuntu-latest
+    #environment: 
+      #name: Production
+      #url: 'https://cicd-sekolahmu.herokuapp.com/'
+    #steps:
+      #- name: Deploy
+        #run: echo I am deploying to prod! 
