@@ -12,9 +12,7 @@ env:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - run: |
@@ -39,30 +37,39 @@ jobs:
         pip install pytest
         pip install pytest-cov
         pytest
-    - name: Add remote origin
-      if: github.ref == 'refs/heads/main' && job.status == 'success' #we specify that this action will ONLY run if everything up to now is successful- so if theres a fail in the tests, then this will not be deployed.
-      run: |
-        git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
-       #Build Docker image
-    - name: Docker build
-      run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
-    - name: Deploy to STAGING
-      run: |
-        heroku container:push web -a $APP_NAME
-        heroku container:release web -a $APP_NAME
+    #- name: Add remote origin
+      #if: github.ref == 'refs/heads/main' && job.status == 'success' #we specify that this action will ONLY run if everything up to now is successful- so if theres a fail in the tests, then this will not be deployed.
+      #run: |
+        #git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
+       ##Build Docker image
+    #- name: Docker build
+      #run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+    #- name: Deploy to STAGING
+      #run: |
+        #heroku container:push web -a $APP_NAME
+        #heroku container:release web -a $APP_NAME
 
-  #DeployStaging:
-    #needs: Build
-    #runs-on: ubuntu-latest
-    #steps:
-      #- name: Deploying to Staging 
-        #uses: akhileshns/heroku-deploy@v3.12.12
-        #with:
-          #heroku_email: ${{ secrets.HEROKU_EMAIL }}
-          #heroku_api_key: $HEROKU_API_KEY  
-          #heroku_app_name: $APP_NAME
-          #heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          #heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+  DeployStaging:
+    name: Deploy to Staging 
+    if: github.event.ref == 'refs/heads/main'
+    needs: [Build]
+    runs-on: ubuntu-latest
+    environment: 
+      name: Staging
+      url: 'http://test.myapp.com'
+    steps:
+      - name: checkout git
+        uses: actions/checkout@v2
+        run: |
+          echo I am deploying to staging
+      - name: Docker build
+        run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+
+      # Push the Docker image to Heroku Container Registry
+      - name: Publish
+        run: |
+          heroku container:push web -a $APP_NAME
+          heroku container:release web -a $APP_NAME
     #steps:
       #- name: Docker Login
         #run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
