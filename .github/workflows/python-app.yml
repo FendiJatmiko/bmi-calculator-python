@@ -38,8 +38,6 @@ jobs:
       run: |
         pip install pytest
         pip install pytest-cov
-        #export PYTHONPATH=app
-        # pytest tests.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=htmlpip install pytest-cov
         pytest
     #- name: Add remote origin
       #if: github.ref == 'refs/heads/main' && job.status == 'success' #we specify that this action will ONLY run if everything up to now is successful- so if theres a fail in the tests, then this will not be deployed.
@@ -55,56 +53,31 @@ jobs:
         #heroku container:release web -a $APP_NAME
 
   DeployStaging:
+    name: Deploy to Staging 
+    if: github.event.ref == 'refs/heads/main'
     needs: [Build]
     runs-on: ubuntu-latest
     environment: 
       name: Staging
       url: 'https://staging-cicd-sekolahmu.herokuapp.com'
-    if: github.event.ref == 'refs/heads/main'
     steps:
-    - name: Deploy to Staging 
-      uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-      with:
-        heroku_api_key: ${{secrets.HEROKU_API}}
-        heroku_app_name: $APP_NAME
-        heroku_email: "jatmikofendi@hotmail.com"
-    - name: Deploy
-      run: echo I am deploying to stagin! 
-    - name: Docker build
-      run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+      - name: Deploy
+        run: echo I am deploying to stagin! 
+      - name: Docker build
+        run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
 
-    - name: login to heroku
-      run: |
-        heroku container:login
-    - name: build and push
-      run: |
-        heroku container:push web -a $APP_NAME 
-    - name: Release
-      run: |
-        heroku container:release web -a $APP_NAME
-  #- name: Deploy to Staging 
-    #uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-      #with:
-        #heroku_api_key: ${{secrets.HEROKU_API}}
-        #heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}#Must be unique in Heroku
-        #heroku_email: "jatmikofendi@hotmail.com"
-    #if: github.event.ref == 'refs/heads/main'
-    #needs: [Build]
-    #runs-on: ubuntu-latest
-    #environment: 
-      #name: Staging
-      #url: 'https://staging-cicd-sekolahmu.herokuapp.com'
-        #heroku apps
-        #heroku container:push web -a $APP_NAME
-        #heroku container:release web -a $APP_NAME
+      - name: Deploy to Heroku
+        run: |
+          heroku container:push web -a $APP_NAME
+          heroku container:release web -a $APP_NAME
 
-  #DeployProd:
-    #name: Deploy to Production 
-    #needs: [DeployStaging]
-    #runs-on: ubuntu-latest
-    #environment: 
-      #name: Production
-      #url: 'https://cicd-sekolahmu.herokuapp.com/'
-    #steps:
-      #- name: Deploy
-        #run: echo I am deploying to prod! 
+  DeployProd:
+    name: Deploy to Production 
+    needs: [DeployStaging]
+    runs-on: ubuntu-latest
+    environment: 
+      name: Production
+      url: 'https://cicd-sekolahmu.herokuapp.com/'
+    steps:
+      - name: Deploy
+        run: echo I am deploying to prod! 
