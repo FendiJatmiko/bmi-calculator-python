@@ -52,13 +52,14 @@ jobs:
       url: 'https://staging-cicd-sekolahmu.herokuapp.com'
     steps:
       - name: Deploy STAG
-        run: git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
-      - name: Docker build
-        run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
-      - name: Deploy to Heroku
-        run: |
-          heroku container:push web -a $APP_NAME
-          heroku container:release web -a $APP_NAME
+        run: echo "this is heroku app key $HEROKU_API_KEY and this is app name $APP_NAME"
+        #run: git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
+      #- name: Docker build
+        #run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+      #- name: Deploy to Heroku
+        #run: |
+          #heroku container:push web -a $APP_NAME
+          #heroku container:release web -a $APP_NAME
 
   DeployProd:
     name: Deploy to Production 
