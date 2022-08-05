@@ -63,7 +63,7 @@ jobs:
         run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
       - name: Deploy to Heroku
         run: |
-          git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
+          #git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
           heroku container:push web -a $APP_NAME
       - name: Release Final
         run: heroku container:release web -a $APP_NAME
