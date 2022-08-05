@@ -3,6 +3,8 @@ name: Python BMI-sekolahmu-Staging application
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 #set environment variables 
 env:
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
@@ -39,17 +41,6 @@ jobs:
         #export PYTHONPATH=app
         # pytest tests.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=htmlpip install pytest-cov
         pytest
-    - name: Add remote origin
-      if: github.ref == 'refs/heads/main' && job.status == 'success' #we specify that this action will ONLY run if everything up to now is successful- so if theres a fail in the tests, then this will not be deployed.
-      run: |
-        git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
-      # Build Docker image
-    - name: Docker build
-      run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
-    - name: Deploy to Heroku
-      run: |
-        heroku container:push web -a $APP_NAME
-        heroku container:release web -a $APP_NAME
 
   DeployStaging:
     name: Deploy to Staging 
@@ -60,8 +51,14 @@ jobs:
       name: Staging
       url: 'https://staging-cicd-sekolahmu.herokuapp.com'
     steps:
-      - name: Deploy
-        run: echo I am deploying to stagin! 
+      - name: Deploy STAG
+        run: git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
+      - name: Docker build
+        run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+      - name: Deploy to Heroku
+        run: |
+          heroku container:push web -a $APP_NAME
+          heroku container:release web -a $APP_NAME
 
   DeployProd:
     name: Deploy to Production 
@@ -71,5 +68,11 @@ jobs:
       name: Production
       url: 'https://cicd-sekolahmu.herokuapp.com/'
     steps:
-      - name: Deploy
-        run: echo I am deploying to prod! 
+      - name: Deploy PROD
+        run: git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
+      - name: Docker build
+        run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+      - name: Deploy to Heroku
+        run: |
+          heroku container:push web -a $APP_NAME
+          heroku container:release web -a $APP_NAME
