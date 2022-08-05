@@ -57,13 +57,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploying to Staging 
-        uses: gonuit/heroku-docker-deploy@v1.3.3
+        uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          email: ${{ secrets.HEROKU_EMAIL }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-          docker_options: "--no-cache"
-          process_type: web
     #steps:
       #- name: Docker Login
         #run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
