@@ -53,7 +53,10 @@ jobs:
         #heroku container:release web -a $APP_NAME
 
   DeployStaging:
-    name: Deploying to Staging 
+    needs: Build
+    if: github.ref == 'refs/heads/main' && job.status == 'success' #we specify that this action will ONLY run if everything up to now is successful- so if theres a fail in the tests, then this will not be deployed.
+    steps:
+      - name: Deploying to Staging 
     uses: gonuit/heroku-docker-deploy@v1.3.31
     with:
       email: ${{ secrets.HEROKU_EMAIL }}
@@ -63,7 +66,6 @@ jobs:
       dockerfile_name: Dockerfile
       docker_options: "--no-cache"
       process_type: web
-    needs: [Build]
     #steps:
       #- name: Docker Login
         #run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
