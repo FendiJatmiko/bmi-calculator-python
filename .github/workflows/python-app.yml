@@ -6,9 +6,9 @@ on:
   pull_request:
     branches: [ main ]
 #set environment variables 
-#env:
+env:
   #HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-  #APP_NAME: ${{ 'staging-cicd-sekolahmu' }}
+  APP_NAME: ${{ 'staging-cicd-sekolahmu' }}
 
 jobs:
   build:
