@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: 
       name: Staging
-      url: 'http://staging-cicd-sekolahmu.herokuapp.com'
+      url: 'http://staging-cicd-sekolahmu.herokuapp.com/?height=167&weight=70'
     steps:
       - name: checkout git
         uses: actions/checkout@v2
@@ -63,7 +63,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: 
       name: Production
-      url: 'https://cicd-sekolahmu.herokuapp.com/'
+      url: 'https://cicd-sekolahmu.herokuapp.com/?height=167&weight=70'
     steps:
       - name: checkout git
         uses: actions/checkout@v2
