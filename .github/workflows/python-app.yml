@@ -57,15 +57,15 @@ jobs:
     if: github.ref == 'refs/heads/main' && job.status == 'success' #we specify that this action will ONLY run if everything up to now is successful- so if theres a fail in the tests, then this will not be deployed.
     steps:
       - name: Deploying to Staging 
-    uses: gonuit/heroku-docker-deploy@v1.3.31
-    with:
-      email: ${{ secrets.HEROKU_EMAIL }}
-      heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-      heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-      dockerfile_directory: ./
-      dockerfile_name: Dockerfile
-      docker_options: "--no-cache"
-      process_type: web
+        uses: gonuit/heroku-docker-deploy@v1.3.31
+        with:
+          email: ${{ secrets.HEROKU_EMAIL }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+          dockerfile_directory: ./
+          dockerfile_name: Dockerfile
+          docker_options: "--no-cache"
+          process_type: web
     #steps:
       #- name: Docker Login
         #run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
