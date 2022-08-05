@@ -6,9 +6,9 @@ on:
   pull_request:
     branches: [ main ]
 #set environment variables 
-env:
-  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-  APP_NAME: ${{ 'staging-cicd-sekolahmu' }}
+#env:
+  #HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+  #APP_NAME: ${{ 'staging-cicd-sekolahmu' }}
 
 jobs:
   build:
@@ -48,6 +48,8 @@ jobs:
     #- name: Docker build
       #run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
     - name: Deploy to Heroku
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       run: |
         heroku container:push web -a $APP_NAME
         heroku container:release web -a $APP_NAME
