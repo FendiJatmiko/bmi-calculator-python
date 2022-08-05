@@ -51,3 +51,25 @@ jobs:
         heroku container:push web -a $APP_NAME
         heroku container:release web -a $APP_NAME
 
+  DeployStaging:
+    name: Deploy to Staging 
+    if: github.event.ref == 'refs/heads/main'
+    needs: [Build]
+    runs-on: ubuntu-latest
+    environment: 
+      name: Staging
+      url: 'https://staging-cicd-sekolahmu.herokuapp.com'
+    steps:
+      - name: Deploy
+        run: echo I am deploying to stagin! 
+
+  DeployProd:
+    name: Deploy to Production 
+    needs: [DeployStaging]
+    runs-on: ubuntu-latest
+    environment: 
+      name: Production
+      url: 'https://cicd-sekolahmu.herokuapp.com/'
+    steps:
+      - name: Deploy
+        run: echo I am deploying to prod! 
