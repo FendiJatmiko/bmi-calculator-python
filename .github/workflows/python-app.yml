@@ -54,7 +54,6 @@ jobs:
 
   DeployStaging:
     needs: Build
-    if: github.ref == 'refs/heads/main' && job.status == 'success' #we specify that this action will ONLY run if everything up to now is successful- so if theres a fail in the tests, then this will not be deployed.
     runs-on: ubuntu-latest
     steps:
       - name: Deploying to Staging 
