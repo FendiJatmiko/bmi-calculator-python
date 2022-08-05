@@ -71,6 +71,12 @@ jobs:
       - name: login to heroku
         run: |
           heroku container:login
+      - name: build and push
+        run: |
+          heroku container:push web -a $APP_NAME 
+      - name: Release
+        run: |
+          heroku container:release web -a $APP_NAME
           #heroku apps
           #heroku container:push web -a $APP_NAME
           #heroku container:release web -a $APP_NAME
