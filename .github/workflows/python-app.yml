@@ -60,8 +60,6 @@ jobs:
     steps:
       - name: checkout git
         uses: actions/checkout@v2
-        run: |
-          echo I am deploying to staging
       - name: Docker build
         run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
 
