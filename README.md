@@ -1,6 +1,6 @@
 # status 
 [![Progress Actions Status](https://github.com/fendijatmiko/bmi-calculator-python/workflows/python-app.yml/badge.svg)]
-
+(https://github.com/fendijatmiko/bmi-calculator-python/actions)
 # Simple App | Body-Mass Index (BMI)
 Exercise to make program Body-Mass Index (BMI) with Flask in Python. :D
 
