@@ -43,3 +43,12 @@ To verify the program running, try with accessing the url like this: `http://loc
 Output:
 
 ![result](img/bmi.png)
+# Test Result | 06 Agustus 2022
+### AutoDeployment CI/CD with github action hosted in heroku with 3 env :
+   1. dev environment with docker-compose 
+      testing accessing the apps localy: 
+      `curl localhost/?height=167&weight=70`
+   2. Staging that can be accessed in : 
+      `curl https://staging-cicd-sekolahmu.herokuapp.com/?height=167&weight=70`
+   3. Prod environment that can be accessed : 
+      `curl https://cicd-sekolahmu.herokuapp.com/?height=167&weight=70`
