@@ -8,7 +8,8 @@ on:
 #set environment variables 
 env:
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-  APP_NAME: ${{ 'staging-cicd-sekolahmu' }}
+  APP_NAME_STAG: ${{ 'staging-cicd-sekolahmu' }}
+  APP_NAME_PROD: ${{ 'cicd-sekolahmu' }}
 
 jobs:
   build:
@@ -52,10 +53,10 @@ jobs:
       - name: Docker build
         run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
       # Push the Docker image to Heroku Container Registry
-      - name: Publish
+      - name: Publish to Stag
         run: |
-          heroku container:push web -a $APP_NAME
-          heroku container:release web -a $APP_NAME
+          heroku container:push web -a $APP_NAME_STAG
+          heroku container:release web -a $APP_NAME_STAG
 
   DeployProd:
     name: Deploy to Production 
@@ -70,7 +71,7 @@ jobs:
       - name: Docker build
         run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
       # Push the Docker image to Heroku Container Registry
-      - name: Publish
+      - name: Publish to Prod
         run: |
-          heroku container:push web -a $APP_NAME
-          heroku container:release web -a $APP_NAME
+          heroku container:push web -a $APP_NAME_PROD
+          heroku container:release web -a $APP_NAME_PROD
