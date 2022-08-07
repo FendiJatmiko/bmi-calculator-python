@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 #set environment variables 
 env:
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
@@ -60,9 +60,8 @@ jobs:
 
   DeployProd:
     name: Deploy to Production 
-    needs: [Build]
+    needs: [DeployStaging]
     runs-on: ubuntu-latest
-    if: github.event.ref == 'refs/heads/master'
     environment: 
       name: Production
       url: 'https://cicd-sekolahmu.herokuapp.com/?height=167&weight=70'
@@ -71,7 +70,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Docker build
         run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
-      # Push the Docker image to Heroku Container Registry
       - name: Publish to Prod
         run: |
           heroku container:push web -a $APP_NAME_PROD
