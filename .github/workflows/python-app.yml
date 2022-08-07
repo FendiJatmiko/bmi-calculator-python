@@ -60,9 +60,9 @@ jobs:
 
   DeployProd:
     name: Deploy to Production 
-    needs: [DeployStaging]
+    needs: [Build]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
+    if: github.event.ref == 'refs/heads/master'
     environment: 
       name: Production
       url: 'https://cicd-sekolahmu.herokuapp.com/?height=167&weight=70'
